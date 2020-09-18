@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// import "./Logo.scss";
-
 const LogoStyle = styled.div``;
 
 const LogoLink = styled.a`

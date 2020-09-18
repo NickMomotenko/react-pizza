@@ -184,7 +184,7 @@ const BusketItem = () => {
 };
 
 const BusketList = () => {
-  const orders = [1, 2, 3];
+  const orders = [1];
   const counter = 1;
   return (
     <BusketWrapper>

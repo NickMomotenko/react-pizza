@@ -2,8 +2,6 @@ import React from "react";
 
 import styled from "styled-components";
 
-// import "./Title.scss";
-
 const TitleStyle = styled.h2`
   font-weight: 700;
   font-size: 32px;

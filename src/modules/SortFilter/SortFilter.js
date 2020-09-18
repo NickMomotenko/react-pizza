@@ -1,21 +1,57 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 
-import "./SortFilter.scss";
+import SortFilterItem from "./SortFilterItem";
 
-import classNames from "classnames";
+const Filter = styled.div`
+  position: relative;
+`;
 
-const SortFilterItem = ({ item, activeFilter, onClick }) => {
-  return (
-    <li
-      className={classNames("filter__item", {
-        "filter__item--active": item == activeFilter,
-      })}
-      onClick={() => onClick(item)}
-    >
-      {item}
-    </li>
-  );
-};
+const FilterBlock = styled.div`
+  color: #2c2c2c;
+  font-weight: 700;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 7px;
+    background: url(../../assets/icon/triangle.svg) center no-repeat;
+    transform: rotate(180deg);
+    vertical-align: middle;
+    margin-right: 7px;
+    transition: 0.3s;
+  }
+`;
+
+const FilterBlockValue = styled.span`
+  letter-spacing: 0.015em;
+  color: #fe5f1e;
+  border-bottom: 1px solid #fe5f1e;
+  cursor: pointer;
+  min-width: 130px;
+
+  &:hover {
+    .filter__block {
+      &::before {
+        transform: rotate(190deg);
+      }
+    }
+  }
+`;
+
+const FilterList = styled.ul`
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+  width: 130px;
+  display: inline-block;
+  padding: 13px 0;
+  position: absolute;
+  background: #fff;
+  z-index: 2;
+  right: 0;
+  margin-top: 10px;
+`;
 
 const SortFilter = () => {
   const filter = ["популярности", "цене", "алфавиту"];
@@ -25,13 +61,13 @@ const SortFilter = () => {
   const [popup, setPopup] = useState(false);
 
   return (
-    <div className="filter">
-      <div className="filter__block">
+    <Filter>
+      <FilterBlock>
         Сортировка по:{" "}
-        <span className="filter__value">{`по ${activeFilter}`}</span>
-      </div>
+        <FilterBlockValue>{`по ${activeFilter}`}</FilterBlockValue>
+      </FilterBlock>
       {popup && (
-        <ul className="filter__list" onMouseLeave={() => setPopup(false)}>
+        <FilterList onMouseLeave={() => setPopup(false)}>
           {filter.map((item, index) => (
             <SortFilterItem
               key={`${item}-${index}`}
@@ -40,9 +76,9 @@ const SortFilter = () => {
               onClick={setActiveFilter}
             />
           ))}
-        </ul>
+        </FilterList>
       )}
-    </div>
+    </Filter>
   );
 };
 

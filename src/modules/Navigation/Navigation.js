@@ -1,30 +1,23 @@
 import React, { useState } from "react";
 
-import "./Navigation.scss";
+import styled from "styled-components";
 
-import classNames from "classnames";
+import NavigationItem from "./NavigationItem";
 
-const NavigationItem = ({ active, item, onClick }) => {
-  return (
-    <li
-      className={classNames("menu__item", {
-        "menu__item--active": item == active,
-      })}
-    >
-      <a href="#" className="menu__link" onClick={() => onClick(item)}>
-        {item}
-      </a>
-    </li>
-  );
-};
+const Menu = styled.nav``;
+
+const MenuList = styled.ul`
+  display: flex;
+  align-items: center;
+`;
 
 const Navigation = () => {
   const menu = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые"];
   const [active, setActive] = useState(menu[0]);
 
   return (
-    <div className="menu">
-      <ul className="menu__list">
+    <Menu>
+      <MenuList>
         {menu.map((item, index) => (
           <NavigationItem
             key={`${item}-${index}`}
@@ -33,8 +26,8 @@ const Navigation = () => {
             item={item}
           />
         ))}
-      </ul>
-    </div>
+      </MenuList>
+    </Menu>
   );
 };
 

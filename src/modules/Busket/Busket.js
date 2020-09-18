@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-// import "./Busket.scss";
 
 const BusketStyle = styled.div`
   display: inline-flex;
