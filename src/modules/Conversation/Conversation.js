@@ -23,7 +23,7 @@ const Conversation = () => {
   const texts = [
     {
       type: "HELLO",
-      text: "Привет, я тут главный",
+      text: "Привет...",
     },
     {
       type: "TELEPHONE",
@@ -39,11 +39,11 @@ const Conversation = () => {
 
   const [hash, setHash] = useState(window.location.hash);
 
-  useEffect(() => {
-    if (window.location.hash != hash) {
-      setHash(window.location.hash);
-    }
-  });
+    useEffect(() => {
+      if (window.location.hash != hash) {
+        setHash(window.location.hash);
+      }
+    });
 
   useEffect(() => {
     if (hash === `#/login`) {
@@ -56,21 +56,31 @@ const Conversation = () => {
       generateDelay(4000);
     }
 
-    if (hash === "#/login/1") {
+    if (hash === "#/login/phone") {
       setActiveText(
         generateActiveText(
           texts.map((item) => item.type == "TELEPHONE" && item.text)
         )
       );
 
-      generateDelay(1000);
+      generateDelay(5000);
     }
-  });
+
+    if (hash === "#/login/name") {
+      setActiveText(
+        generateActiveText(
+          texts.map((item) => item.type == "NAME" && item.text)
+        )
+      );
+
+      generateDelay(5000);
+    }
+  }, [hash]);
 
   const generateActiveText = (text) => text || "";
 
   const generateDelay = (time) => {
-    return time;
+    return time || 1000;
   };
 
   return (

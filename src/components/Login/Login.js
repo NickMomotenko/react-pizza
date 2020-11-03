@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
@@ -10,6 +10,7 @@ import Conversation from "../../modules/Conversation/Conversation";
 import { UIWrapper, UIContent } from "../../UI/UI";
 
 import test from "../../assets/test.png";
+import { useHistory } from "react-router-dom";
 
 const LoginW = styled.div`
   display: flex;
@@ -83,9 +84,34 @@ const Login = () => {
     number: null,
   });
 
+  const history = useHistory();
+
+  useEffect(() => {
+    setTimeout(() => {
+      history.push(`${history.location.pathname}/phone`);
+    }, 3500);
+  }, []);
+
+  const onClick = () => {
+    const { location } = history;
+
+    if (location.pathname == "/login") {
+      history.push(`/login/phone`);
+    }
+
+    if (location.pathname == "/login/phone") {
+      history.push(`/login/name`);
+    }
+
+    if(location.pathname == '/login/name'){
+      history.push(`/`);
+
+    }
+  };
+
   return (
     <LoginW>
-      {/* <LoginStyles>
+      <LoginStyles>
         <UIWrapper borderColor="#fff">
           <UIContent>
             <LoginWrapper
@@ -98,7 +124,7 @@ const Login = () => {
         <UIWrapper borderColor="#fff">
           <LoginWrapper bg={require("../../assets/1-min.jpg")}></LoginWrapper>
         </UIWrapper>
-      </LoginStyles> */}
+      </LoginStyles>
       <LoginContent>
         <LoginLogo url={test} />
         <Conversation />
@@ -108,7 +134,7 @@ const Login = () => {
           </LoginLabel>
         ))}
         <LoginButton>
-          <Button title="LOGIN" />
+          <Button title="LOGIN" onClick={onClick} />
         </LoginButton>
       </LoginContent>
     </LoginW>

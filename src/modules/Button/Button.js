@@ -27,9 +27,9 @@ const ButtonText = styled.span`
   color: ${(props) => props.color || "#fff"};
 `;
 
-const Button = ({ title }) => {
+const Button = ({ title, onClick }) => {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper onClick={onClick}>
       <ButtonText>{title}</ButtonText>
     </ButtonWrapper>
   );
