@@ -2,7 +2,7 @@ import React from "react";
 
 import styled from "styled-components";
 
-import "./MainContent.scss";
+import { Route } from "react-router-dom";
 
 import Header from "../Header/Header";
 import Navigation from "../../modules/Navigation/Navigation";
@@ -11,9 +11,10 @@ import Title from "../../modules/Title/Title";
 
 import PizzaList from "../PizzaList/PizzaList";
 import BusketList from "../BusketList/BusketList";
+import Login from "../Login/Login";
 
 const MainContentWrapper = styled.main`
-  background-color: #fff;
+  background-color: #fcfcfc;
   box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.03);
   border-radius: 10px;
   padding: 50px;
@@ -24,7 +25,7 @@ const MainContentRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom:60px;
+  margin-bottom: 60px;
 `;
 
 const MainContentContents = styled.div``;
@@ -39,9 +40,9 @@ const MainContent = () => {
       </MainContentRow>
       <MainContentContents>
         {/* <Title title="Все пиццы" /> */}
-        <Title title="Корзина" />
-        <PizzaList />
-        {/* <BusketList /> */}
+        {/* <Title title="Корзина" /> */}
+        <Route exact path="/" component={PizzaList} />
+        <Route path="/busket" component={BusketList} />
       </MainContentContents>
     </MainContentWrapper>
   );

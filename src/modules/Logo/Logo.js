@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
+import { Link } from "react-router-dom";
+
 const LogoStyle = styled.div``;
 
-const LogoLink = styled.a`
+const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
 `;
@@ -39,8 +41,8 @@ const LogoText = styled.span`
 const Logo = () => {
   return (
     <LogoStyle>
-      <LogoLink>
-        <LogoImg url={require("../../assets/logo.png")} />
+      <LogoLink to="/">
+        <LogoImg url={require("../../assets/test.png")} />
         <LogoDesc>
           <LogoMain>React Pizza</LogoMain>
           <LogoText>самая вкусная пицца во вселенной</LogoText>

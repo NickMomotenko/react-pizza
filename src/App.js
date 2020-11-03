@@ -1,13 +1,16 @@
 import React from "react";
 
 import "./App.css";
+import { Route } from "react-router-dom";
 
 import MainContent from "./components/MainContent/MainContent";
+import Login from "./components/Login/Login";
 
 const App = () => {
   return (
     <div className="app">
-      <MainContent />
+      <Route exact path="/" component={MainContent} />
+      <Route path="/login" component={Login} />
     </div>
   );
 };

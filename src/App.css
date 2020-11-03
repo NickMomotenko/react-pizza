@@ -36,11 +36,18 @@ button {
   outline: none;
   border: 1px solid transparent;
   cursor: pointer;
+  padding: 0;
 }
 
 p {
   margin: 0;
   padding: 0;
+}
+
+input,
+textarea {
+  outline: none;
+  border: 1px solid transparent;
 }
 
 #root {
@@ -53,6 +60,7 @@ p {
   width: 100%;
   overflow-x: hidden;
   background: #ffdf8c;
+  position:relative;
 }
 
 .container {

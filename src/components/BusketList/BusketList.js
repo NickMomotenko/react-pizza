@@ -4,6 +4,8 @@ import styled from "styled-components";
 import BusketTemplate from "./BusketTemplate";
 
 import Button from "../../modules/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteOrder } from "../../redux/orders/ordersAction";
 
 const BusketWrapper = styled.div`
   max-width: 800px;
@@ -96,6 +98,8 @@ const BusketItemInfo = styled.p`
 
 const BusketItemOptions = styled.div`
   margin-right: 85px;
+  display: flex;
+  align-items:center;
 
   button {
     margin-right: 12px;
@@ -136,14 +140,14 @@ const BusketItemCancel = styled.div`
   margin-left: auto;
 `;
 
-const BusketItem = () => {
+const BusketItem = ({ name, count, dough, size, img, price, onClick }) => {
   return (
     <BusketItemStyle>
       <BusketItemWrapper>
-        <BusketItemImg url={require("../../assets/1.png")} />
+        <BusketItemImg url={img} />
         <BusketItemDesc>
-          <BusketItemName>Сырный цыпленок</BusketItemName>
-          <BusketItemInfo>тонкое тесто, 26 см.</BusketItemInfo>
+          <BusketItemName>{name}</BusketItemName>
+          <BusketItemInfo>{`${dough} тесто, ${size} см.`}</BusketItemInfo>
         </BusketItemDesc>
         <BusketItemOptions>
           <Button
@@ -155,7 +159,7 @@ const BusketItem = () => {
             radius="50%"
             padding="0"
           />
-          <BusketItemOptionsCounter>2</BusketItemOptionsCounter>
+          <BusketItemOptionsCounter>{count}</BusketItemOptionsCounter>
           <Button
             title="+"
             color="#FE5F1E"
@@ -166,7 +170,7 @@ const BusketItem = () => {
             padding="0"
           />
         </BusketItemOptions>
-        <BusketItemPrice>{`777 грн`}</BusketItemPrice>
+        <BusketItemPrice>{`${price} грн`}</BusketItemPrice>
         <BusketItemCancel>
           <Button
             title="x"
@@ -176,6 +180,7 @@ const BusketItem = () => {
             borderColor="#D7D7D7"
             radius="50%"
             padding="0"
+            onClick={onClick}
           />
         </BusketItemCancel>
       </BusketItemWrapper>
@@ -184,23 +189,31 @@ const BusketItem = () => {
 };
 
 const BusketList = () => {
-  const orders = [1];
-  const counter = 1;
+  const orders = useSelector((state) => state.orders.orders);
+
+  const dispatch = useDispatch();
+
   return (
     <BusketWrapper>
       <BusketLists>
         {orders.length ? (
-          orders.map((pizza) => <BusketItem />)
+          orders.map((order) => (
+            <BusketItem
+              key={order.id}
+              onClick={() => dispatch(deleteOrder(order.id))}
+              {...order}
+            />
+          ))
         ) : (
           <BusketTemplate />
         )}
       </BusketLists>
       <BusketOrdersInfo>
         <BusketOrdersCounter>
-          <span>Всего пицц: {` ${counter} шт.`}</span>
+          <span>Всего пицц: {` ${orders.length} шт.`}</span>
         </BusketOrdersCounter>
         <BusketOrdersValue>
-          Сумма заказа: <span>{`${counter} грн`}</span>
+          Сумма заказа: <span>{`${orders.length} грн`}</span>
         </BusketOrdersValue>
       </BusketOrdersInfo>
       <BusketButtons>
