@@ -43,6 +43,7 @@ const Input = (props) => {
         type={props.type ? props.type : "text"}
         name={props.name}
         placeholder={props.placeholder}
+        required
       />
       {props.name == "search" && <InputIcon url={test} />}
     </InputWrapper>

@@ -80,8 +80,7 @@ const LoginButton = styled.div`
 
 const Login = () => {
   const [data, setData] = useState({
-    login: "",
-    password: "",
+    number: null,
   });
 
   return (
@@ -105,7 +104,7 @@ const Login = () => {
         <Conversation />
         {Object.keys(data).map((item) => (
           <LoginLabel key={item}>
-            <Input name={item} placeholder={item} />
+            <Input type="tel" name={item} placeholder={item} />
           </LoginLabel>
         ))}
         <LoginButton>

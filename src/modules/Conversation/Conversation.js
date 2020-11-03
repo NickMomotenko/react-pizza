@@ -1,18 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
-import Typed from "react-typed";
-
-// const textAnimation = keyframes`
-//     from {
-//         transform: rotate(0deg);
-//     }
-
-//     to {
-//         transform: rotate(360deg);
-//     }
-// `;
+import ReactTypingEffect from "react-typing-effect";
 
 const ConversationWrapp = styled.div`
   background: #fff;
@@ -41,39 +31,60 @@ const Conversation = () => {
     },
     {
       type: "NAME",
-      text: `Введи свое имя`,
+      text: "Введи свое имя",
     },
   ];
 
-  //   const test = ["Привет", "Введи номер своего мобильного", "Введи свое имя"];
+  const [activeText, setActiveText] = useState("");
 
-  const [activeText, setActiveText] = useState("Привет");
-
-  return (
-    <ConversationWrapp>
-      <ConversationBla text="Привет" />
-      {/* <Typed strings={test()} typeSpeed={40} /> */}
-    </ConversationWrapp>
-  );
-};
-
-const ConversationBla = ({ text }) => {
-  const testRef = useRef(null);
+  const [hash, setHash] = useState(window.location.hash);
 
   useEffect(() => {
-    const options = {
-      strings: [text],
-      typeSpeed: 50,
-    };
+    if (window.location.hash != hash) {
+      setHash(window.location.hash);
+    }
+  });
 
-    const typed = new Typed(testRef.current, options);
+  useEffect(() => {
+    if (hash === `#/login`) {
+      setActiveText(
+        generateActiveText(
+          texts.map((item) => item.type == "HELLO" && item.text)
+        )
+      );
 
-    return () => {
-      typed.destroy();
-    };
-  }, [text]);
+      generateDelay(4000);
+    }
 
-  return <ConversationWrapp ref={testRef}></ConversationWrapp>;
+    if (hash === "#/login/1") {
+      setActiveText(
+        generateActiveText(
+          texts.map((item) => item.type == "TELEPHONE" && item.text)
+        )
+      );
+
+      generateDelay(1000);
+    }
+  });
+
+  const generateActiveText = (text) => text || "";
+
+  const generateDelay = (time) => {
+    return time;
+  };
+
+  return (
+    <>
+      <ConversationWrapp>
+        <ReactTypingEffect
+          text={activeText}
+          typingDelay={0}
+          speed={100}
+          eraseDelay={generateDelay()}
+        />
+      </ConversationWrapp>
+    </>
+  );
 };
 
 export default Conversation;
