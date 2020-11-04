@@ -10,6 +10,8 @@ import Input from "../../modules/Input/Input";
 import OrderProgress from "../Order/OrderProgress";
 import LocationMap from "../Location/LocationMap";
 
+// import { LocationProvider } from "../../context/locationContext";
+
 const PizzaWrapper = styled.div``;
 
 const PizzaListWrapper = styled.ul`
@@ -46,11 +48,13 @@ const PizzaList = () => {
         ))}
         
       </PizzaListWrapper> */}
-      <Location />
-      <LocationTab />
+      {/* <LocationProvider> */}
+        <Location />
+        <LocationTab />
+      {/* </LocationProvider> */}
       {/* <Input name="search" placeholder="Find your favorite food.." /> */}
       {/* <OrderProgress /> */}
-      {/* <LocationMap /> */}
+      <LocationMap />
     </PizzaWrapper>
   );
 };

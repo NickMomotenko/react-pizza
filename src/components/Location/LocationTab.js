@@ -53,9 +53,7 @@ const LocationTab = () => {
       <LocationTabWrapper>
         <LocationTabImg url={require("../../assets/map/1.jpg")} />
         <LocationTabBlock>
-          <LocationTabIcon
-            url={require("../../assets/icon/placeholder.svg")}
-          />
+          <LocationTabIcon url={require("../../assets/icon/placeholder.svg")} />
         </LocationTabBlock>
       </LocationTabWrapper>
     </UIWrapper>

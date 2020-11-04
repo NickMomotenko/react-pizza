@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 import ReactMapGL, { Marker } from "react-map-gl";
 
 import styled from "styled-components";
+// import { useLocationMapData } from "../../context/locationContext";
 
-const token =
-  "pk.eyJ1Ijoibmlja21vbW90ZW5rbyIsImEiOiJja2gwZmlyaTExMTZjMnFwYzkzZmV4aDZzIn0.cJnvWL9JvZd55keGW85vWg";
+import { useLocation } from "../../hooks/location";
 
 const LocationMapMarker = styled.img.attrs((props) => ({
   src: props.url,
@@ -15,24 +15,11 @@ const LocationMapMarker = styled.img.attrs((props) => ({
   display: inline-block;
 `;
 
-const LocationMap = () => {
-  const [viewport, setViewport] = useState({
-    latitude: 0,
-    longitude: 0,
-    width: "500px",
-    height: "500px",
-    zoom: 12,
-  });
+const token =
+  "pk.eyJ1Ijoibmlja21vbW90ZW5rbyIsImEiOiJja2gwZmlyaTExMTZjMnFwYzkzZmV4aDZzIn0.cJnvWL9JvZd55keGW85vWg";
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setViewport({
-        ...viewport,
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude,
-      });
-    });
-  }, []);
+const LocationMap = () => {
+  const { viewport } = useLocation();
 
   return (
     <ReactMapGL {...viewport} mapboxApiAccessToken={token}>

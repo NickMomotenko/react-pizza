@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import Button from "../../modules/Button/Button";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
+
+import { useLocation } from "../../hooks/location";
 
 const LocationWrapper = styled.div`
   min-width: 250px;
@@ -30,8 +32,12 @@ const LocationContent = styled.div`
   z-index: 2;
 `;
 
-const LocationIcon = styled.img.attrs((props) => ({
-  src: props.url,
+const LocationAnimIcon = styled.div`
+  animation: ${(props) => props.anim} 4s linear infinite;
+`;
+
+const LocationIcon = styled.img.attrs(({ url }) => ({
+  src: url,
 }))`
   height: 40px;
   width: 40px;
@@ -44,9 +50,24 @@ const LocationText = styled.p`
   margin-bottom: 25px;
 `;
 
+const LocationSubText = styled(LocationText)`
+  font-weight: 400;
+`;
+
 const LocationButton = styled.div``;
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
 const Location = () => {
+  const { isReady } = useLocation();
   return (
     <>
       <UIWrapper>
@@ -54,13 +75,15 @@ const Location = () => {
           <LocationWrapper>
             <LocationWrapperBg url={require("../../assets/bg.png")} />
             <LocationContent>
-              <LocationIcon url={require("../../assets/icon/radar.svg")} />
               <LocationText>
-                Enable your location <br /> for easily connect with us
+                Чтобы сервис корректно работал нам нужна твоя локация
               </LocationText>
-              <LocationButton>
-                <Button title="Enable now" />
-              </LocationButton>
+              <LocationAnimIcon anim={isReady ? `${rotate}` : "none"}>
+                <LocationIcon url={require("../../assets/icon/radar.svg")} />
+              </LocationAnimIcon>
+              <LocationSubText>
+                {!isReady ? "пытаюсь найти тебя..." : "все ок"}
+              </LocationSubText>
             </LocationContent>
           </LocationWrapper>
         </UIContent>
