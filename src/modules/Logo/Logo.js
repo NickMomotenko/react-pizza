@@ -6,14 +6,17 @@ import { Link } from "react-router-dom";
 const LogoStyle = styled.div``;
 
 const LogoLink = styled(Link)`
-  display: flex;
-  align-items: center;
+  height: 100px;
+  width: 100px;
+  display: inline-block;
 `;
 
 const LogoImg = styled.img.attrs((props) => ({
   src: props.url,
 }))`
   flex-shrink: 0;
+  max-width:100%;
+  max-height:100%;
 `;
 
 const LogoDesc = styled.div`
@@ -43,10 +46,6 @@ const Logo = () => {
     <LogoStyle>
       <LogoLink to="/">
         <LogoImg url={require("../../assets/test.png")} />
-        <LogoDesc>
-          <LogoMain>React Pizza</LogoMain>
-          <LogoText>самая вкусная пицца во вселенной</LogoText>
-        </LogoDesc>
       </LogoLink>
     </LogoStyle>
   );
