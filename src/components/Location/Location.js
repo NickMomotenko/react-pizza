@@ -1,6 +1,6 @@
 import React from "react";
 
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 import Button from "../../modules/Button/Button";
 
@@ -32,9 +32,7 @@ const LocationContent = styled.div`
   z-index: 2;
 `;
 
-const LocationAnimIcon = styled.div`
-  animation: ${(props) => props.anim} 4s linear infinite;
-`;
+const LocationAnimIcon = styled.div``;
 
 const LocationIcon = styled.img.attrs(({ url }) => ({
   src: url,
@@ -42,6 +40,12 @@ const LocationIcon = styled.img.attrs(({ url }) => ({
   height: 40px;
   width: 40px;
   margin-bottom: 16px;
+  animation: ${(props) =>
+    props.anim
+      ? css`
+          ${rotate} 2s linear infinite
+        `
+      : "none"};
 `;
 
 const LocationText = styled.p`
@@ -68,6 +72,7 @@ const rotate = keyframes`
 
 const Location = () => {
   const { isReady } = useLocation();
+
   return (
     <>
       <UIWrapper>
@@ -78,9 +83,10 @@ const Location = () => {
               <LocationText>
                 Чтобы сервис корректно работал нам нужна твоя локация
               </LocationText>
-              <LocationAnimIcon anim={isReady ? `${rotate}` : "none"}>
-                <LocationIcon url={require("../../assets/icon/radar.svg")} />
-              </LocationAnimIcon>
+              <LocationIcon
+                url={require("../../assets/icon/radar.svg")}
+                anim={isReady}
+              />
               <LocationSubText>
                 {!isReady ? "пытаюсь найти тебя..." : "все ок"}
               </LocationSubText>

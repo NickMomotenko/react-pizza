@@ -46,7 +46,7 @@ const Conversation = () => {
     });
 
   useEffect(() => {
-    if (hash === `#/login`) {
+    if (hash === `#/registration`) {
       setActiveText(
         generateActiveText(
           texts.map((item) => item.type == "HELLO" && item.text)
@@ -56,7 +56,7 @@ const Conversation = () => {
       generateDelay(4000);
     }
 
-    if (hash === "#/login/phone") {
+    if (hash === "#/registration/phone") {
       setActiveText(
         generateActiveText(
           texts.map((item) => item.type == "TELEPHONE" && item.text)
@@ -66,10 +66,20 @@ const Conversation = () => {
       generateDelay(5000);
     }
 
-    if (hash === "#/login/name") {
+    if (hash === "#/registration/name") {
       setActiveText(
         generateActiveText(
           texts.map((item) => item.type == "NAME" && item.text)
+        )
+      );
+
+      generateDelay(5000);
+    }
+
+    if (hash === "#/login") {
+      setActiveText(
+        generateActiveText(
+          texts.map((item) => item.type == "TELEPHONE" && item.text)
         )
       );
 

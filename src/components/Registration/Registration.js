@@ -2,15 +2,18 @@ import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
+import { Route, useHistory } from "react-router-dom";
+
 import Input from "../../modules/Input/Input";
 import Button from "../../modules/Button/Button";
 import ButtonCustom from "../../modules/ButtonCustom/ButtonCustom";
 import Conversation from "../../modules/Conversation/Conversation";
 
+import Location from "../Location/Location";
+
 import { UIWrapper, UIContent } from "../../UI/UI";
 
 import test from "../../assets/test.png";
-import { useHistory } from "react-router-dom";
 
 const LoginW = styled.div`
   display: flex;
@@ -86,8 +89,28 @@ const Login = () => {
 
   const history = useHistory();
 
+  const defaultPath = "/registration";
+
+  useEffect(() => {
+    // setTimeout(() => {
+    //   history.push(`${defaultPath}/phone`);
+    // }, 3500);
+  }, []);
+
   const onClick = () => {
-    history.push(`/list`);
+    const { location } = history;
+
+    if (location.pathname == `${defaultPath}`) {
+      history.push(`${defaultPath}/phone`);
+    }
+
+    if (location.pathname == `${defaultPath}/phone`) {
+      history.push(`${defaultPath}/name`);
+    }
+
+    if (location.pathname == `${defaultPath}/name`) {
+      history.push(`${defaultPath}/map`);
+    }
   };
 
   return (
@@ -108,7 +131,7 @@ const Login = () => {
       </LoginStyles>
       <LoginContent>
         <LoginLogo url={test} />
-        <Conversation />
+        {/* <Conversation /> */}
         {Object.keys(data).map((item) => (
           <LoginLabel key={item}>
             <Input type="tel" name={item} placeholder={item} />
@@ -117,6 +140,8 @@ const Login = () => {
         <LoginButton>
           <Button title="LOGIN" onClick={onClick} />
         </LoginButton>
+
+        <Route path={`${defaultPath}/map`} component={Location} />
       </LoginContent>
     </LoginW>
   );

@@ -41,7 +41,7 @@ const MainContent = () => {
       <MainContentContents>
         {/* <Title title="Все пиццы" /> */}
         {/* <Title title="Корзина" /> */}
-        <Route exact path="/" component={PizzaList} />
+        <Route path="/list" component={PizzaList} />
         <Route path="/busket" component={BusketList} />
       </MainContentContents>
     </MainContentWrapper>

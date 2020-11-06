@@ -9,7 +9,7 @@ export const useLocation = () => {
     zoom: 12,
   });
 
-  const [isReady, setIsReady] = useState(true);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     getUserLocation();
@@ -23,9 +23,9 @@ export const useLocation = () => {
         longitude: position.coords.longitude,
       });
 
-      //   setTimeout(() => {
-      //     setIsReady(true);
-      //   }, 3000);
+        setTimeout(() => {
+          setIsReady(true);
+        }, 3500);
     });
   };
 
