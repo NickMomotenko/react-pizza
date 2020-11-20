@@ -2,13 +2,19 @@ import React from "react";
 
 import styled, { keyframes, css } from "styled-components";
 
-import { useHistory } from "react-router-dom";
-
-import Button from "../../modules/Button/Button";
+// import Button from "../../modules/Button/Button";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
 
 import { useLocation } from "../../hooks/location";
+import { Link } from "react-router-dom";
+
+const LocationWrapperBlock = styled.div`
+  transition-delay: 0.5s;
+  transition: 0.5s;
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  height: ${(props) => (props.visible ? "initial" : "0")};
+`;
 
 const LocationWrapper = styled.div`
   min-width: 250px;
@@ -33,8 +39,6 @@ const LocationContent = styled.div`
   position: relative;
   z-index: 2;
 `;
-
-const LocationAnimIcon = styled.div``;
 
 const LocationIcon = styled.img.attrs(({ url }) => ({
   src: url,
@@ -75,17 +79,11 @@ const rotate = keyframes`
   }
 `;
 
-const Location = () => {
+const Location = ({ visible }) => {
   const { isReady } = useLocation();
 
-  const history = useHistory();
-
-  const test = () => {
-    history.push("/list");
-  };
-
   return (
-    <>
+    <LocationWrapperBlock visible={visible}>
       <UIWrapper>
         <UIContent>
           <LocationWrapper>
@@ -102,11 +100,13 @@ const Location = () => {
                 {!isReady && "пытаюсь найти тебя..."}
               </LocationSubText>
             </LocationContent>
-            <LocationButton onClick={test}>Найти меня позже</LocationButton>
+            <Link to="/list">
+              <LocationButton>Найти меня позже</LocationButton>
+            </Link>
           </LocationWrapper>
         </UIContent>
       </UIWrapper>
-    </>
+    </LocationWrapperBlock>
   );
 };
 

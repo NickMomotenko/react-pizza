@@ -1,0 +1,68 @@
+.filter {
+  position: relative;
+
+  &__block {
+    color: #2c2c2c;
+    font-weight: 700;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 7px;
+      background: url(../../assets/icon/triangle.svg) center no-repeat;
+      transform: rotate(180deg);
+      vertical-align: middle;
+      margin-right: 7px;
+      transition: 0.3s;
+    }
+  }
+
+  &__value {
+    letter-spacing: 0.015em;
+    color: #fe5f1e;
+    border-bottom: 1px solid #fe5f1e;
+    cursor: pointer;
+    min-width: 130px;
+
+    &:hover {
+      .filter__block {
+        &::before {
+          transform: rotate(190deg);
+        }
+      }
+    }
+  }
+
+  &__list {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.03);
+    border-radius: 10px;
+    width: 130px;
+    display: inline-block;
+    padding: 13px 0;
+    position: absolute;
+    background: #fff;
+    z-index: 2;
+    right: 0;
+    margin-top: 10px;
+  }
+
+  &__item {
+    padding: 10px;
+    letter-spacing: 0.015em;
+    font-size: 14px;
+    color: #000000;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(254, 95, 30, 0.05);
+      color: #fe5f1e;
+    }
+
+    &--active {
+      background: rgba(254, 95, 30, 0.05);
+      color: #fe5f1e;
+    }
+  }
+}

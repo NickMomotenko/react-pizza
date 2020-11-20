@@ -79,11 +79,8 @@ const LoginLogo = styled.img.attrs((props) => ({
 `;
 
 const LoginInputs = styled.div`
-  margin-bottom: 20px;
-
   overflow: hidden;
   max-width: 220px;
-
   * {
     transition: 0.5s;
   }
@@ -100,11 +97,25 @@ const LoginInputs = styled.div`
 
 const LoginRow = styled.div`
   display: flex;
+  margin-bottom: 20px;
+`;
+
+const LoginBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: 0.3s;
+
+  opacity: ${(props) => (props.visible ? 0 : 1)};
+  height: ${(props) => (props.visible ? "0" : "initial")};
 `;
 
 const LoginButton = styled.div`
   text-align: center;
 `;
+
+const LoginMainContent = styled.div``;
 
 const Login = () => {
   const [data, setData] = useState({
@@ -113,6 +124,7 @@ const Login = () => {
   });
 
   const [step, setStep] = useState(1);
+  const [isVisible, setIsVisible] = useState(false);
 
   const inputsBlock = React.useRef(null);
 
@@ -127,8 +139,10 @@ const Login = () => {
   }, []);
 
   useEffect(() => {
-    if (step == 2) {
-      tranformInputsBlock();
+    if (step == 1) {
+      tranformInputsBlock(0);
+    } else if (step == 2) {
+      tranformInputsBlock(1);
     }
   }, [step]);
 
@@ -148,15 +162,15 @@ const Login = () => {
       }, 0);
 
       history.push(`${defaultPath}/3`);
+
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 200);
     }
   };
 
-  const tranformInputsBlock = () => {
-    inputsBlock.current.style.transform = `translateX(-100%)`;
-  };
-
-  const renderRegTitle = (text) => {
-    return `${text}`;
+  const tranformInputsBlock = (value) => {
+    inputsBlock.current.style.transform = `translateX(${value * -100}%)`;
   };
 
   return (
@@ -177,31 +191,28 @@ const Login = () => {
       </LoginStyles>
       <LoginContent>
         <LoginLogo url={test} />
-        {step <= 2 ? (
-          <LoginInputs>
-            <LoginRow ref={inputsBlock}>
-              {Object.keys(data).map((item) => (
-                <Input
-                  key={item}
-                  type="tel"
-                  name={item}
-                  placeholder={
-                    item == "number" ? "Твой номер телефона" : "Твое имя"
-                  }
-                />
-              ))}
-            </LoginRow>
-          </LoginInputs>
-        ) : (
-          <Location />
-        )}
-        {step !== 3 ? (
-          <LoginButton>
-            <Button title="Далее" onClick={onClick} />
-          </LoginButton>
-        ) : (
-          <></>
-        )}
+        <LoginMainContent>
+          <LoginBlock visible={isVisible}>
+            <LoginInputs>
+              <LoginRow ref={inputsBlock}>
+                {Object.keys(data).map((item) => (
+                  <Input
+                    key={item}
+                    type="tel"
+                    name={item}
+                    placeholder={
+                      item == "number" ? "Твой номер телефона" : "Твое имя"
+                    }
+                  />
+                ))}
+              </LoginRow>
+            </LoginInputs>
+            <LoginButton>
+              <Button title="Далее" onClick={onClick} />
+            </LoginButton>
+          </LoginBlock>
+          <Location visible={isVisible} />
+        </LoginMainContent>
       </LoginContent>
     </LoginW>
   );
