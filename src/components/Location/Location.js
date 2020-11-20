@@ -2,6 +2,8 @@ import React from "react";
 
 import styled, { keyframes, css } from "styled-components";
 
+import { useHistory } from "react-router-dom";
+
 import Button from "../../modules/Button/Button";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
@@ -58,7 +60,10 @@ const LocationSubText = styled(LocationText)`
   font-weight: 400;
 `;
 
-const LocationButton = styled.div``;
+const LocationButton = styled.button`
+  background: transparent;
+  border-bottom: 1px solid black;
+`;
 
 const rotate = keyframes`
   from {
@@ -73,6 +78,12 @@ const rotate = keyframes`
 const Location = () => {
   const { isReady } = useLocation();
 
+  const history = useHistory();
+
+  const test = () => {
+    history.push("/list");
+  };
+
   return (
     <>
       <UIWrapper>
@@ -81,16 +92,17 @@ const Location = () => {
             <LocationWrapperBg url={require("../../assets/bg.png")} />
             <LocationContent>
               <LocationText>
-                Чтобы сервис корректно работал нам нужна твоя локация
+                Для корректной работы сервиса, нам нужна твоя геолокация
               </LocationText>
               <LocationIcon
                 url={require("../../assets/icon/radar.svg")}
                 anim={isReady}
               />
               <LocationSubText>
-                {!isReady ? "пытаюсь найти тебя..." : "все ок"}
+                {!isReady && "пытаюсь найти тебя..."}
               </LocationSubText>
             </LocationContent>
+            <LocationButton onClick={test}>Найти меня позже</LocationButton>
           </LocationWrapper>
         </UIContent>
       </UIWrapper>

@@ -57,6 +57,10 @@ const LoginContent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
+
+  padding: 20px;
+  border-radius: 40px;
+  box-shadow: 0 0 22px #dfc6c6;
 `;
 
 const LoginLabel = styled.label`
@@ -75,8 +79,18 @@ const LoginLogo = styled.img.attrs((props) => ({
   margin-bottom: 27px;
 `;
 
-const LoginButton = styled.div`
-  text-align: center;
+const LoginButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const LoginButton = styled.button`
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #588f5c;
+  border-bottom: 1px solid #474768;
+  margin-top: 20px;
 `;
 
 const Login = () => {
@@ -86,8 +100,12 @@ const Login = () => {
 
   const history = useHistory();
 
-  const onClick = () => {
-    history.push(`/list`);
+  const login = () => {
+    history.push("/list");
+  };
+
+  const registration = () => {
+    history.push("/registration");
   };
 
   return (
@@ -108,15 +126,19 @@ const Login = () => {
       </LoginStyles>
       <LoginContent>
         <LoginLogo url={test} />
-        <Conversation />
         {Object.keys(data).map((item) => (
           <LoginLabel key={item}>
-            <Input type="tel" name={item} placeholder={item} />
+            <Input
+              type="tel"
+              name={item}
+              placeholder={item === "number" ? "Номер телефона" : item}
+            />
           </LoginLabel>
         ))}
-        <LoginButton>
-          <Button title="LOGIN" onClick={onClick} />
-        </LoginButton>
+        <LoginButtonWrapper>
+          <Button title="Войти" onClick={login} />
+          <LoginButton onClick={registration}>Создать аккаунт</LoginButton>
+        </LoginButtonWrapper>
       </LoginContent>
     </LoginW>
   );

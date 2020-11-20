@@ -78,6 +78,30 @@ const LoginLogo = styled.img.attrs((props) => ({
   margin-bottom: 27px;
 `;
 
+const LoginInputs = styled.div`
+  margin-bottom: 20px;
+
+  overflow: hidden;
+  max-width: 220px;
+
+  * {
+    transition: 0.5s;
+  }
+
+  div {
+    max-width: 100%;
+    padding-right: 10px;
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+`;
+
+const LoginRow = styled.div`
+  display: flex;
+`;
+
 const LoginButton = styled.div`
   text-align: center;
 `;
@@ -85,32 +109,54 @@ const LoginButton = styled.div`
 const Login = () => {
   const [data, setData] = useState({
     number: null,
+    name: "",
   });
+
+  const [step, setStep] = useState(1);
+
+  const inputsBlock = React.useRef(null);
 
   const history = useHistory();
 
   const defaultPath = "/registration";
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   history.push(`${defaultPath}/phone`);
-    // }, 3500);
+    setTimeout(() => {
+      history.push(`${defaultPath}/${step}`);
+    }, 0);
   }, []);
+
+  useEffect(() => {
+    if (step == 2) {
+      tranformInputsBlock();
+    }
+  }, [step]);
 
   const onClick = () => {
     const { location } = history;
 
-    if (location.pathname == `${defaultPath}`) {
-      history.push(`${defaultPath}/phone`);
+    if (location.pathname == `${defaultPath}/1`) {
+      setTimeout(() => {
+        setStep(step + 1);
+      }, 0);
+      history.push(`${defaultPath}/2`);
     }
 
-    if (location.pathname == `${defaultPath}/phone`) {
-      history.push(`${defaultPath}/name`);
-    }
+    if (location.pathname == `${defaultPath}/2`) {
+      setTimeout(() => {
+        setStep(step + 1);
+      }, 0);
 
-    if (location.pathname == `${defaultPath}/name`) {
-      history.push(`${defaultPath}/map`);
+      history.push(`${defaultPath}/3`);
     }
+  };
+
+  const tranformInputsBlock = () => {
+    inputsBlock.current.style.transform = `translateX(-100%)`;
+  };
+
+  const renderRegTitle = (text) => {
+    return `${text}`;
   };
 
   return (
@@ -131,17 +177,31 @@ const Login = () => {
       </LoginStyles>
       <LoginContent>
         <LoginLogo url={test} />
-        {/* <Conversation /> */}
-        {Object.keys(data).map((item) => (
-          <LoginLabel key={item}>
-            <Input type="tel" name={item} placeholder={item} />
-          </LoginLabel>
-        ))}
-        <LoginButton>
-          <Button title="LOGIN" onClick={onClick} />
-        </LoginButton>
-
-        <Route path={`${defaultPath}/map`} component={Location} />
+        {step <= 2 ? (
+          <LoginInputs>
+            <LoginRow ref={inputsBlock}>
+              {Object.keys(data).map((item) => (
+                <Input
+                  key={item}
+                  type="tel"
+                  name={item}
+                  placeholder={
+                    item == "number" ? "Твой номер телефона" : "Твое имя"
+                  }
+                />
+              ))}
+            </LoginRow>
+          </LoginInputs>
+        ) : (
+          <Location />
+        )}
+        {step !== 3 ? (
+          <LoginButton>
+            <Button title="Далее" onClick={onClick} />
+          </LoginButton>
+        ) : (
+          <></>
+        )}
       </LoginContent>
     </LoginW>
   );
