@@ -1,8 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 import styled from "styled-components";
 
 import test from "../../assets/icon/loupe.svg";
+
+import { useForm } from "react-hook-form";
 
 const InputWrapper = styled.div`
   position: relative;
@@ -36,18 +38,20 @@ const InputIcon = styled.img.attrs((props) => ({
   transform: translateY(-50%);
 `;
 
-const Input = (props) => {
+const Input = forwardRef((props, ref) => {
   return (
     <InputWrapper>
       <InputStyles
         type={props.type ? props.type : "text"}
         name={props.name}
         placeholder={props.placeholder}
+        ref={ref}
         required
+        {...props}
       />
       {props.name == "search" && <InputIcon url={test} />}
     </InputWrapper>
   );
-};
+});
 
 export default Input;

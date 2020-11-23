@@ -30,7 +30,7 @@ const MainContentRow = styled.div`
 
 const MainContentContents = styled.div``;
 
-const MainContent = () => {
+const MainContent = ({ match }) => {
   return (
     <MainContentWrapper>
       <Header />
@@ -41,7 +41,7 @@ const MainContent = () => {
       <MainContentContents>
         {/* <Title title="Все пиццы" /> */}
         {/* <Title title="Корзина" /> */}
-        <Route path="/list" component={PizzaList} />
+        <Route exact path="/list" component={PizzaList} />
         <Route path="/busket" component={BusketList} />
       </MainContentContents>
     </MainContentWrapper>

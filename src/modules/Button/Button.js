@@ -10,9 +10,9 @@ const ButtonWrapper = styled.button`
   border-radius: 25px;
   padding: 10px 30px;
   box-shadow: 0 0 15px #fbaf03;
-  transition: .3s;
+  transition: 0.3s;
 
-  &:hover{
+  &:hover {
     background: #dd9f14;
     box-shadow: 0 0 15px #dd9f14;
   }
@@ -27,9 +27,9 @@ const ButtonText = styled.span`
   color: ${(props) => props.color || "#fff"};
 `;
 
-const Button = ({ title, onClick }) => {
+const Button = ({ title, onClick, type }) => {
   return (
-    <ButtonWrapper onClick={onClick}>
+    <ButtonWrapper onClick={onClick} type={type ? type : "button"}>
       <ButtonText>{title}</ButtonText>
     </ButtonWrapper>
   );

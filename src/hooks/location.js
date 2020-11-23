@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+import Geocode from "react-geocode";
 
 export const useLocation = () => {
   const [viewport, setViewport] = useState({
@@ -9,11 +12,19 @@ export const useLocation = () => {
     zoom: 12,
   });
 
-  const [isReady, setIsReady] = useState(true);
+  const [isReady, setIsReady] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     getUserLocation();
-  });
+  }, []);
+
+  useEffect(() => {
+    if (isReady) {
+      // history.push("/login");
+    }
+  }, [isReady]);
 
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -23,11 +34,11 @@ export const useLocation = () => {
         longitude: position.coords.longitude,
       });
 
-      // setTimeout(() => {
-      //   setIsReady(true);
-      // }, 0);
+      setTimeout(() => {
+        setIsReady(true);
+      }, 2000);
     });
   };
 
-  return { viewport, getUserLocation, isReady };
+  return { viewport, isReady };
 };

@@ -12,6 +12,10 @@ import { UIWrapper, UIContent } from "../../UI/UI";
 import test from "../../assets/test.png";
 import { useHistory } from "react-router-dom";
 
+import { useForm } from "react-hook-form";
+
+import { useData } from "../../hooks/userData";
+
 const LoginW = styled.div`
   display: flex;
   position: absolute;
@@ -47,7 +51,7 @@ const LoginWrapper = styled.div`
   position: relative;
 `;
 
-const LoginContent = styled.div`
+const LoginContent = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,19 +97,23 @@ const LoginButton = styled.button`
   margin-top: 20px;
 `;
 
-const Login = () => {
-  const [data, setData] = useState({
-    number: null,
-  });
+const Login = ({ match }) => {
+  const { register, handleSubmit } = useForm();
 
   const history = useHistory();
 
-  const login = () => {
-    history.push("/list");
-  };
+  const { data, setValues } = useData();
 
   const registration = () => {
     history.push("/registration");
+  };
+
+  const login = (data) => {
+    if (!data) return;
+
+    setValues(data);
+
+    history.push("/list");
   };
 
   return (
@@ -124,19 +132,18 @@ const Login = () => {
           <LoginWrapper bg={require("../../assets/1-min.jpg")}></LoginWrapper>
         </UIWrapper>
       </LoginStyles>
-      <LoginContent>
+      <LoginContent onSubmit={handleSubmit(login)}>
         <LoginLogo url={test} />
-        {Object.keys(data).map((item) => (
-          <LoginLabel key={item}>
-            <Input
-              type="tel"
-              name={item}
-              placeholder={item === "number" ? "Номер телефона" : item}
-            />
-          </LoginLabel>
-        ))}
+        <LoginLabel>
+          <Input
+            type="tel"
+            name="number"
+            ref={register({ required: true })}
+            placeholder="Твой номер телефона"
+          />
+        </LoginLabel>
         <LoginButtonWrapper>
-          <Button title="Войти" onClick={login} />
+          <Button title="Войти" type="submit" />
           <LoginButton onClick={registration}>Создать аккаунт</LoginButton>
         </LoginButtonWrapper>
       </LoginContent>

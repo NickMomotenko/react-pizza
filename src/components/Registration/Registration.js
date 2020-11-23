@@ -2,18 +2,16 @@ import React, { useState, useEffect } from "react";
 
 import styled from "styled-components";
 
-import { Route, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import Input from "../../modules/Input/Input";
 import Button from "../../modules/Button/Button";
-import ButtonCustom from "../../modules/ButtonCustom/ButtonCustom";
-import Conversation from "../../modules/Conversation/Conversation";
-
 import Location from "../Location/Location";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
 
 import test from "../../assets/test.png";
+import { useData } from "../../hooks/userData";
 
 const LoginW = styled.div`
   display: flex;
@@ -50,7 +48,7 @@ const LoginWrapper = styled.div`
   position: relative;
 `;
 
-const LoginContent = styled.div`
+const LoginContent = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,14 +58,6 @@ const LoginContent = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 2;
-`;
-
-const LoginLabel = styled.label`
-  margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;
 
 const LoginLogo = styled.img.attrs((props) => ({
@@ -118,59 +108,22 @@ const LoginButton = styled.div`
 const LoginMainContent = styled.div``;
 
 const Login = () => {
-  const [data, setData] = useState({
-    number: null,
-    name: "",
-  });
-
-  const [step, setStep] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
 
-  const inputsBlock = React.useRef(null);
+  const { register, handleSubmit } = useForm();
 
-  const history = useHistory();
+  const { setValues } = useData();
 
-  const defaultPath = "/registration";
+  const registration = (data) => {
+    if (!data) return;
 
-  useEffect(() => {
-    setTimeout(() => {
-      history.push(`${defaultPath}/${step}`);
-    }, 0);
-  }, []);
-
-  useEffect(() => {
-    if (step == 1) {
-      tranformInputsBlock(0);
-    } else if (step == 2) {
-      tranformInputsBlock(1);
-    }
-  }, [step]);
-
-  const onClick = () => {
-    const { location } = history;
-
-    if (location.pathname == `${defaultPath}/1`) {
-      setTimeout(() => {
-        setStep(step + 1);
-      }, 0);
-      history.push(`${defaultPath}/2`);
-    }
-
-    if (location.pathname == `${defaultPath}/2`) {
-      setTimeout(() => {
-        setStep(step + 1);
-      }, 0);
-
-      history.push(`${defaultPath}/3`);
+    if (data) {
+      setValues(data);
 
       setTimeout(() => {
         setIsVisible(true);
       }, 200);
     }
-  };
-
-  const tranformInputsBlock = (value) => {
-    inputsBlock.current.style.transform = `translateX(${value * -100}%)`;
   };
 
   return (
@@ -189,29 +142,31 @@ const Login = () => {
           <LoginWrapper bg={require("../../assets/1-min.jpg")}></LoginWrapper>
         </UIWrapper>
       </LoginStyles>
-      <LoginContent>
+      <LoginContent onSubmit={handleSubmit(registration)}>
         <LoginLogo url={test} />
         <LoginMainContent>
           <LoginBlock visible={isVisible}>
             <LoginInputs>
-              <LoginRow ref={inputsBlock}>
-                {Object.keys(data).map((item) => (
-                  <Input
-                    key={item}
-                    type="tel"
-                    name={item}
-                    placeholder={
-                      item == "number" ? "Твой номер телефона" : "Твое имя"
-                    }
-                  />
-                ))}
+              <LoginRow>
+                <Input
+                  ref={register({ required: true })}
+                  type="tel"
+                  name="number"
+                  placeholder="Твой номер телефона"
+                />
+                <Input
+                  ref={register({ required: true })}
+                  name="name"
+                  placeholder="Твое имя"
+                />
               </LoginRow>
             </LoginInputs>
             <LoginButton>
-              <Button title="Далее" onClick={onClick} />
+              <Button title="Далее" type="submit" />
             </LoginButton>
           </LoginBlock>
-          <Location visible={isVisible} />
+          {/* <Location visible={isVisible} /> */}
+          {isVisible && <Location visible={isVisible} />}
         </LoginMainContent>
       </LoginContent>
     </LoginW>

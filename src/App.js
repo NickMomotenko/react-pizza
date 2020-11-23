@@ -10,8 +10,8 @@ import Registration from "./components/Registration/Registration";
 const App = () => {
   return (
     <div className="app">
-      {/* <Route exact path="/" component={MainContent} /> */}
-      <Route path="/login" component={Login} />
+      <Route exact path="/" component={Login} />
+      <Route path="/list" component={MainContent} />
       <Route path="/registration" component={Registration} />
     </div>
   );
