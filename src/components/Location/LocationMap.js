@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import ReactMapGL, { Marker } from "react-map-gl";
 
 import styled from "styled-components";
-// import { useLocationMapData } from "../../context/locationContext";
 
 import { useLocation } from "../../hooks/location";
 

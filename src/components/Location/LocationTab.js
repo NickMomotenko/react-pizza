@@ -3,24 +3,34 @@ import React from "react";
 import styled from "styled-components";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
-
-import test from "../../assets/map/1.jpg";
+import LocationMap from "./LocationMap";
 
 const LocationTabWrapper = styled.div`
   height: 100px;
   width: 100px;
+  object-fit: contain;
   border-radius: 31px;
   overflow: hidden;
   position: relative;
 `;
 
-const LocationTabImg = styled.img.attrs((props) => ({
-  src: props.url,
-}))`
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
+const LocationMapWrapper = styled.div`
+  height: 200px;
+  width: 200px;
+
+  position: absolute;
+  top: 0;
+  left: 100%;
+  z-index: 2;
 `;
+
+// const LocationTabImg = styled.img.attrs((props) => ({
+//   src: props.url,
+// }))`
+//   height: 100%;
+//   width: 100%;
+//   object-fit: cover;
+// `;
 
 const LocationTabBlock = styled.div`
   position: absolute;
@@ -48,13 +58,24 @@ const LocationTabIcon = styled.img.attrs((props) => ({
 `;
 
 const LocationTab = () => {
+  const [onFocus, setOnFocus] = React.useState(true);
+
+  const focus = () => {
+    setOnFocus(true);
+  };
+
   return (
     <UIWrapper>
-      <LocationTabWrapper>
-        <LocationTabImg url={require("../../assets/map/1.jpg")} />
+      <LocationTabWrapper onMouseOver={() => focus()}>
+        <LocationMap />
         <LocationTabBlock>
           <LocationTabIcon url={require("../../assets/icon/placeholder.svg")} />
         </LocationTabBlock>
+        {onFocus && (
+          <LocationMapWrapper>
+            <LocationMap />
+          </LocationMapWrapper>
+        )}
       </LocationTabWrapper>
     </UIWrapper>
   );

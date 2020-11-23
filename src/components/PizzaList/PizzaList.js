@@ -48,11 +48,10 @@ const PizzaList = () => {
         ))}
         
       </PizzaListWrapper> */}
-        <Location />
-        <LocationTab />
+      {/* <Location /> */}
+      <LocationTab />
       {/* <Input name="search" placeholder="Find your favorite food.." /> */}
       {/* <OrderProgress /> */}
-      <LocationMap />
     </PizzaWrapper>
   );
 };

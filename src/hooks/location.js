@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import Geocode from "react-geocode";
-
 export const useLocation = () => {
   const [viewport, setViewport] = useState({
     latitude: 0,
     longitude: 0,
-    width: "500px",
-    height: "500px",
+    width: "200px",
+    height: "200px",
     zoom: 12,
   });
 
