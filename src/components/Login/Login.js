@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import styled from "styled-components";
+
+import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import Input from "../../modules/Input/Input";
 import Button from "../../modules/Button/Button";
 import ButtonCustom from "../../modules/ButtonCustom/ButtonCustom";
 import Conversation from "../../modules/Conversation/Conversation";
+import SubTitle from "../../modules/SubTitle/SubTitle";
 
 import { UIWrapper, UIContent } from "../../UI/UI";
 
 import test from "../../assets/test.png";
-import { useHistory } from "react-router-dom";
-
-import { useForm } from "react-hook-form";
 
 import { useData } from "../../hooks/userData";
 
@@ -34,7 +35,7 @@ const LoginStyles = styled.div`
 
   &:nth-child(2) {
     margin-right: 0;
-    margin-top: 370px;
+    // margin-top: 370px;
   }
 `;
 
@@ -65,6 +66,7 @@ const LoginContent = styled.form`
   padding: 20px;
   border-radius: 40px;
   box-shadow: 0 0 22px #dfc6c6;
+  background: #fff;
 `;
 
 const LoginLabel = styled.label`
@@ -97,12 +99,20 @@ const LoginButton = styled.button`
   margin-top: 20px;
 `;
 
+const LoginTitle = styled.div`
+  position: absolute;
+  position: absolute;
+  top: -50%;
+  left: -2%;
+  z-index: -1;
+`;
+
 const Login = ({ match }) => {
   const { register, handleSubmit } = useForm();
 
   const history = useHistory();
 
-  const { data, setValues } = useData();
+  const { setValues } = useData();
 
   const registration = () => {
     history.push("/registration");
@@ -120,11 +130,7 @@ const Login = ({ match }) => {
     <LoginW>
       <LoginStyles>
         <UIWrapper borderColor="#fff">
-          <UIContent>
-            <LoginWrapper
-              bg={require("../../assets/1-min-r.jpg")}
-            ></LoginWrapper>
-          </UIContent>
+          <LoginWrapper bg={require("../../assets/1-min-r.jpg")}></LoginWrapper>
         </UIWrapper>
       </LoginStyles>
       <LoginStyles>
@@ -146,6 +152,9 @@ const Login = ({ match }) => {
           <Button title="Войти" type="submit" />
           <LoginButton onClick={registration}>Создать аккаунт</LoginButton>
         </LoginButtonWrapper>
+        <LoginTitle>
+          <SubTitle label="Login" />
+        </LoginTitle>
       </LoginContent>
     </LoginW>
   );
